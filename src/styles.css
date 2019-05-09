@@ -1,0 +1,43 @@
+:root {
+  --main-bg-color: rgb(34, 34, 34);
+  --main-text-color: rgb(160, 160, 160);
+  --container-width: 90vw;
+  --container-margins: 2rem 5vw;
+}
+
+* {
+  color: var(--main-text-color);
+  background-color: var(--main-bg-color);
+}
+
+body {
+  font-family: sans-serif;
+  text-align: center;
+  width: var(--container-width);
+  margin: var(--container-margins);
+}
+
+input {
+  width: var(--container-width);
+  height: 2rem;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+input:focus {
+  outline: auto rgb(42, 187, 235);
+  outline-width: 10px;
+}
+
+.container {
+  display: grid;
+  justify-items: center;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-column-gap: 0.5rem;
+  grid-row-gap: 0.5rem;
+}
+
+img {
+  object-fit: contain;
+  width: 200px;
+}

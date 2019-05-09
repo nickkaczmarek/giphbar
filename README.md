@@ -1,2 +1,0 @@
-# giphbar
-Created with CodeSandbox
