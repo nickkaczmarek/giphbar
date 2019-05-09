@@ -5,14 +5,14 @@
   --container-margins: 2rem 5vw;
 }
 
-* {
+body,
+:not(header) {
+  font-family: sans-serif;
+  text-align: center;
   color: var(--main-text-color);
   background-color: var(--main-bg-color);
 }
-
-body {
-  font-family: sans-serif;
-  text-align: center;
+section {
   width: var(--container-width);
   margin: var(--container-margins);
 }
@@ -40,4 +40,10 @@ input:focus {
 img {
   object-fit: contain;
   width: 200px;
+}
+
+#brand {
+  font-family: "Modak", cursive;
+  font-size: 72px;
+  text-decoration: none;
 }
