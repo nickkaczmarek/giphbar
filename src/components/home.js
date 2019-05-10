@@ -38,7 +38,6 @@ function Home() {
                 let data = JSON.parse(localStorage.getItem("data")) || [];
                 data.push(img.url);
                 localStorage.setItem("data", JSON.stringify(data));
-                console.log(JSON.parse(localStorage.getItem("data")));
               }}
             />
           ))}
