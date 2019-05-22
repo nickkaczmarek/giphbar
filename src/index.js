@@ -8,7 +8,7 @@ import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 
 const App = ({ children }) => (
-  <React.Fragment>
+  <section id="container">
     <Logo />
     <nav>
       <Link to="/">Home</Link> <Link to="saved">Saved</Link>
@@ -17,7 +17,7 @@ const App = ({ children }) => (
       <Home path="/" />
       <Saved path="saved" />
     </Router>
-  </React.Fragment>
+  </section>
 );
 
 ReactDOM.render(<App />, document.getElementById("root"));

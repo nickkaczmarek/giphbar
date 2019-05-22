@@ -1,26 +1,89 @@
 :root {
   --main-bg-color: rgb(34, 34, 34);
   --main-text-color: rgb(160, 160, 160);
-  --container-width: 90vw;
-  --container-margins: 2rem 5vw;
+  --container-width: 70vw;
+  --container-margins: 2rem 14vw;
+  --gif-container-grid-column-gap: 0.5rem;
+  --gif-container-grid-row-gap: 0.5rem;
+  --img-width: 200px;
+  --input-width: 50vw;
+  --input-height: 2rem;
 }
 
-body,
-:not(header) {
+#container {
+  display: grid;
+}
+nav {
+  margin-bottom: 1rem;
+}
+nav > * {
+  font-size: 1.5rem;
+}
+
+.gif-container {
+  display: grid;
+  justify-items: center;
+  grid-template-columns: repeat(auto-fill, minmax(var(--img-width), 1fr));
+  grid-auto-flow: row dense;
+  grid-column-gap: var(--gif-container-grid-column-gap);
+  grid-row-gap: var(--gif-container-grid-row-gap);
+  width: var(--container-width);
+  margin: var(--container-margins);
+}
+
+@media (max-width: 1024px) {
+  :root {
+    --container-width: 90vw;
+    --container-margins: 2rem 5vw;
+  }
+}
+@media (max-width: 414px) {
+  :root {
+    --container-width: 90vw;
+    --container-margins: 2rem 5vw;
+    --img-width: 35vw;
+    --input-width: 80vw;
+    --input-height: 1.5rem;
+  }
+}
+
+body:not(header),
+body:not(header) > * {
+  height: 100vh;
+  /* width: 100vw; */
   font-family: sans-serif;
   text-align: center;
   color: var(--main-text-color);
   background-color: var(--main-bg-color);
 }
-section {
-  width: var(--container-width);
-  margin: var(--container-margins);
+* {
+  font-family: "Lato", sans-serif;
+  font-size: 18px;
+}
+button:focus {
+  outline: -webkit-focus-ring-color auto 15px;
+}
+
+header#brand {
+  font-family: "Modak", cursive;
+  display: block;
+  text-align: center;
+  background-color: rgb(85, 89, 166);
+  color: #c5c5c5;
+  margin: -8px -8px 20px -8px;
+  font-size: 72px;
+  text-decoration: none;
 }
 
 input {
-  width: var(--container-width);
-  height: 2rem;
-  font-size: 2rem;
+  color: var(--main-text-color);
+  background-color: var(--main-bg-color);
+  min-width: 300px;
+  /* padding-left: 10px; */
+  text-align: center;
+  width: var(--input-width);
+  height: var(--input-height);
+  font-size: var(--input-height);
   margin-bottom: 20px;
 }
 
@@ -29,21 +92,8 @@ input:focus {
   outline-width: 10px;
 }
 
-.container {
-  display: grid;
-  justify-items: center;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-column-gap: 0.5rem;
-  grid-row-gap: 0.5rem;
-}
-
 img {
   object-fit: contain;
-  width: 200px;
-}
-
-#brand {
-  font-family: "Modak", cursive;
-  font-size: 72px;
-  text-decoration: none;
+  width: var(--img-width);
+  border: 2px solid white;
 }
