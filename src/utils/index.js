@@ -1,3 +1,5 @@
+import { useLocalStorage } from "./useLocalStorage";
+
 /**
  * Use this to search the giphy api
  *
@@ -9,6 +11,7 @@ async function search(query) {
 
   const response = await fetch(
     `${url}?q=${query}&api_key=${apiKey}&limit=20&rating=g`,
+    { cache: "reload" },
   );
   const json = await response.json();
 
@@ -22,9 +25,9 @@ async function search(query) {
 
 /**
  * Use this to avoid running certain functions in development
- * 
+ *
  * @example
- * 
+ *
  *    runIfProd(functThatAutoFocusesInput());
  *
  * @param {function} cb
@@ -32,10 +35,11 @@ async function search(query) {
 function runIfProd(cb) {
   if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
     // dev code
+    console.log("Something would be running in prod right about now.");
   } else {
     cb();
     // production code
   }
 }
 
-export { search, runIfProd };
+export { search, runIfProd, useLocalStorage };
