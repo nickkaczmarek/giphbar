@@ -11,6 +11,7 @@
 
 #container {
   display: grid;
+  grid-template-rows: 109px var(--input-height) var(--input-height) 1fr;
   height: 100vh;
   font-family: sans-serif;
   text-align: center;
