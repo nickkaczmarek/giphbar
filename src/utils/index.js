@@ -5,12 +5,12 @@ import { useLocalStorage } from "./useLocalStorage";
  *
  * @param {string} query
  */
-async function search(query) {
+async function search(query, rating) {
   const apiKey = "CAucImDiFvcD00x7ZqHSm4zcXL9Ui22d";
   const url = "https://api.giphy.com/v1/gifs/search";
 
   const response = await fetch(
-    `${url}?q=${query}&api_key=${apiKey}&limit=20&rating=g`,
+    `${url}?q=${query}&api_key=${apiKey}&limit=20&rating=${rating}`,
     { cache: "reload" },
   );
   const json = await response.json();

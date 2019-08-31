@@ -5,8 +5,12 @@
   --gif-container-grid-column-gap: 0.5rem;
   --gif-container-grid-row-gap: 0.5rem;
   --img-width: 200px;
-  --input-width: 50vw;
+  --input-width: 400px;
   --input-height: 2rem;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 #container {
@@ -17,12 +21,18 @@
   text-align: center;
 }
 
+#input-container {
+  display: inline-flex;
+  flex-wrap: wrap;
+  height: var(--input-height);
+}
+
 nav {
   margin-bottom: 1rem;
 }
 
 nav > * {
-  font-size: 1.5rem;
+  font-size: 2.3rem;
 }
 
 .gif-container {
@@ -46,6 +56,11 @@ nav > * {
     height: 70px;
     font-size: 48px !important;
   }
+  #input-container {
+    display: grid;
+    flex-direction: column;
+    height: var(--input-height);
+  }
 }
 
 body {
@@ -63,25 +78,37 @@ header#brand {
   background-color: rgb(85, 89, 166);
   color: #c5c5c5;
   margin: -8px -8px 20px -8px;
-  font-size: 72px;
+  font-size: 4rem;
   text-decoration: none;
 }
 
-input {
+input,
+select {
   color: var(--main-text-color);
   background-color: var(--main-bg-color);
-  min-width: 300px;
-  max-width: 1000px;
-  text-align: center;
   width: var(--input-width);
   height: var(--input-height);
-  font-size: var(--input-height);
-  margin-bottom: 20px;
+  font-size: calc(var(--input-height) * 0.75);
+  text-align: center;
+  margin: 20px auto;
+  padding: 0;
+}
+
+input {
+  padding: 0;
+  min-width: 300px;
+  max-width: 1000px;
 }
 
 input:focus {
   outline: auto rgb(42, 187, 235);
   outline-width: 10px;
+}
+
+select {
+  width: 200px;
+  font-size: 1.5rem;
+  margin-left: 20px;
 }
 
 img {
