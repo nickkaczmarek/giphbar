@@ -17,6 +17,7 @@ async function search(query, rating) {
 
   return json.data.map(img => ({
     webp: img.images.fixed_width_downsampled.webp,
+    safari: img.images.fixed_width_downsampled.url,
     url: img.images.original.url,
     id: img.id,
     title: img.title,
@@ -41,5 +42,49 @@ function runIfProd(cb) {
     // production code
   }
 }
+
+export const Clipboard = (function(window, document, navigator) {
+  var textArea, copy;
+
+  function isOS() {
+    return navigator.userAgent.match(/ipad|iphone/i);
+  }
+
+  function createTextArea(text) {
+    textArea = document.createElement("textArea");
+    textArea.value = text;
+    document.body.appendChild(textArea);
+  }
+
+  function selectText() {
+    var range, selection;
+
+    if (isOS()) {
+      range = document.createRange();
+      range.selectNodeContents(textArea);
+      selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      textArea.setSelectionRange(0, 999999);
+    } else {
+      textArea.select();
+    }
+  }
+
+  function copyToClipboard() {
+    document.execCommand("copy");
+    document.body.removeChild(textArea);
+  }
+
+  copy = function(text) {
+    createTextArea(text);
+    selectText();
+    copyToClipboard();
+  };
+
+  return {
+    copy: copy
+  };
+})(window, document, navigator);
 
 export { search, runIfProd, useLocalStorage };
