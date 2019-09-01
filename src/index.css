@@ -1,11 +1,12 @@
 :root {
+  --grid-header-box-height: 99px;
   --main-bg-color: rgb(34, 34, 34);
   --main-text-color: rgb(160, 160, 160);
   --container-margins: 2rem auto;
   --gif-container-grid-column-gap: 0.5rem;
   --gif-container-grid-row-gap: 0.5rem;
   --img-width: 200px;
-  --input-width: 400px;
+  --input-width: 40vw;
   --input-height: 2rem;
 }
 
@@ -15,7 +16,7 @@
 
 #container {
   display: grid;
-  grid-template-rows: 109px var(--input-height) var(--input-height) 1fr;
+  grid-template-rows: var(--grid-header-box-height) var(--input-height) var(--input-height) 1fr;
   height: 100vh;
   font-family: sans-serif;
   text-align: center;
@@ -25,6 +26,7 @@
   display: inline-flex;
   flex-wrap: wrap;
   height: var(--input-height);
+  max-width: 980px;
 }
 
 nav {
@@ -32,7 +34,7 @@ nav {
 }
 
 nav > * {
-  font-size: 2.3rem;
+  font-size: 2.15rem;
 }
 
 .gif-container {
@@ -46,20 +48,52 @@ nav > * {
   margin: var(--container-margins);
 }
 
+@media (min-width: 980px) {
+  :root {
+    --input-width: 440px;
+  }
+}
+
+@media (max-width: 650px) {
+  nav > * {
+    font-size: 2rem;
+  }
+  input,
+  select {
+    margin: 20px 0;
+  }
+}
+
 @media (max-width: 414px) {
   :root {
-    --img-width: 35vw;
-    --input-width: 80vw;
+    --grid-header-box-height: 79px;
     --input-height: 1.5rem;
+
+    --img-width: 150px;
+    --input-width: 30vw;
+  }
+  input,
+  select {
+    margin: 0;
+    font-size: calc(var(--input-height) * 0.45);
   }
   #brand {
     height: 70px;
     font-size: 48px !important;
   }
+  #container {
+    grid-template-rows: var(--grid-header-box-height) 2rem calc(var(--input-height) * 2) 1fr;
+  }
   #input-container {
     display: grid;
     flex-direction: column;
-    height: var(--input-height);
+    justify-content: center;
+    height: calc(var(--input-height) * 3);
+    margin: 20px 0;
+  }
+  #input-container > * {
+    margin: 0;
+    width: 80vw;
   }
 }
 
@@ -86,6 +120,7 @@ input,
 select {
   color: var(--main-text-color);
   background-color: var(--main-bg-color);
+  border: none;
   width: var(--input-width);
   height: var(--input-height);
   font-size: calc(var(--input-height) * 0.75);
@@ -96,7 +131,6 @@ select {
 
 input {
   padding: 0;
-  min-width: 300px;
   max-width: 1000px;
 }
 
@@ -106,8 +140,7 @@ input:focus {
 }
 
 select {
-  width: 200px;
-  font-size: 1.5rem;
+  /* font-size: 1.5rem; */
   margin-left: 20px;
 }
 
