@@ -194,7 +194,7 @@ form > input {
   background-color: var(--main-bg-color);
 }
 
-form > button {
+button {
   background-color: var(--main-text-color);
   color: var(--main-bg-color);
   padding: 1px;
