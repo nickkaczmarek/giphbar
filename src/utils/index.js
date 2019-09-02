@@ -43,7 +43,26 @@ function runIfProd(cb) {
   }
 }
 
-export const Clipboard = (function(window, document, navigator) {
+const isSafari = () => {
+  /*
+   * Browser detection
+   * @return {String}
+   */
+  const browserDetection = () => {
+    const browsers = {
+      firefox: !!window.InstallTrigger,
+      safari: !!window.ApplePaySession,
+      opera: window.opr && !!window.opr.addons,
+      chrome: window.chrome && !!window.chrome.webstore,
+    };
+
+    return Object.keys(browsers).find(key => browsers[key] === true);
+  };
+
+  return browserDetection() === "safari";
+};
+
+const Clipboard = (function(window, document, navigator) {
   var textArea, copy;
 
   function isOS() {
@@ -83,8 +102,34 @@ export const Clipboard = (function(window, document, navigator) {
   };
 
   return {
-    copy: copy
+    copy: copy,
   };
 })(window, document, navigator);
 
-export { search, runIfProd, useLocalStorage };
+/**
+ *
+ * @param {object} gif
+ * @property {string} id
+ * @property {string} title
+ * @property {string} safari
+ * @property {string} url
+ * @property {string} webp
+ *
+ */
+const updateGifsInLocalStorage = gif => {
+  let data = JSON.parse(localStorage.getItem("data")) || [];
+  let isAlreadyInStorage = data.find(x => x.id === gif.id);
+  if (!isAlreadyInStorage) {
+    data.push(gif);
+    localStorage.setItem("data", JSON.stringify(data));
+  }
+};
+
+export {
+  search,
+  runIfProd,
+  useLocalStorage,
+  updateGifsInLocalStorage,
+  isSafari,
+  Clipboard,
+};

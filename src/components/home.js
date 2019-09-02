@@ -1,6 +1,12 @@
 import React, { useState, useEffect, createRef, Fragment } from "react";
-import { search, runIfProd, useLocalStorage, Clipboard } from "../utils";
-import { Img } from "./Img";
+import {
+  search,
+  runIfProd,
+  useLocalStorage,
+  Clipboard,
+  isSafari,
+  updateGifsInLocalStorage,
+} from "../utils";
 
 function Home() {
   const [inputValue, setInputValue] = useState("");
@@ -18,27 +24,6 @@ function Home() {
     }
     checkForLastQuery();
   }, [lastQuery, rating]);
-
-  const isSafari = () => {
-    /*
-     * Browser detection
-     * @return {String}
-     */
-    const browserDetection = () => {
-      const browsers = {
-        firefox: !!window.InstallTrigger,
-        safari: !!window.ApplePaySession,
-        opera: window.opr && !!window.opr.addons,
-        chrome: window.chrome && !!window.chrome.webstore
-      };
-
-      return Object.keys(browsers).find(key => browsers[key] === true);
-    };
-
-    return browserDetection() === "safari";
-  };
-
-  
 
   return (
     <Fragment>
@@ -73,7 +58,8 @@ function Home() {
         <section className="gif-container">
           {" "}
           {data.map(img => (
-            <Img
+            <img
+              className={"image"}
               src={isSafari() ? img.safari : img.webp}
               alt={img.title}
               key={img.id}
@@ -84,12 +70,7 @@ function Home() {
                 } else {
                   navigator.clipboard.writeText(img.url);
                 }
-                let data = JSON.parse(localStorage.getItem("data")) || [];
-                let isAlreadyInStorage = data.find(x => x.id === img.id);
-                if (!isAlreadyInStorage) {
-                  data.push(img);
-                  localStorage.setItem("data", JSON.stringify(data));
-                }
+                updateGifsInLocalStorage(img);
                 runIfProd(() => inputRef.current.focus());
               }}
             />
