@@ -1,5 +1,5 @@
 import React from "react";
-import { Img } from "./Img";
+import { isSafari } from "../utils";
 
 function Saved() {
   const [images, setImages] = React.useState(
@@ -13,8 +13,9 @@ function Saved() {
           {" "}
           {images.map(img => (
             <figure key={img.id}>
-              <Img
-                src={img.webp}
+              <img
+                className={"image"}
+                src={isSafari() ? img.safari : img.webp}
                 alt={img.title}
                 id={img.id}
                 onClick={() => navigator.clipboard.writeText(img.url)}
@@ -25,7 +26,8 @@ function Saved() {
                   let items = data.filter(i => i.id !== img.id);
                   localStorage.setItem("data", JSON.stringify(items));
                   setImages(JSON.parse(localStorage.getItem("data")));
-                }}>
+                }}
+              >
                 X
               </button>
             </figure>

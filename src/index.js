@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { Router, Link } from "@reach/router";
 import { Home } from "./components/home.js";
 import { Saved } from "./components/saved.js";
+import { Upload } from "./components/upload.js";
 import Logo from "./components/logo.js";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
@@ -11,11 +12,13 @@ const App = ({ children }) => (
   <section id="container">
     <Logo />
     <nav>
-      <Link to="/">Home</Link> <Link to="saved">Saved</Link>
+      <Link to="/">Home</Link> <Link to="saved">Saved</Link>{" "}
+      <Link to="upload">Upload</Link>
     </nav>
     <Router>
       <Home path="/" />
       <Saved path="saved" />
+      <Upload path="upload" />
     </Router>
   </section>
 );
