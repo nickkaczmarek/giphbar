@@ -16,9 +16,7 @@
 
 #container {
   display: grid;
-  grid-template-rows:
-    var(--grid-header-box-height) var(--input-height) var(--input-height)
-    1fr;
+  grid-template-rows: var(--grid-header-box-height) var(--input-height) var(--input-height) 1fr;
   height: 100vh;
   font-family: sans-serif;
   text-align: center;
@@ -84,9 +82,7 @@ nav > * {
     font-size: 48px !important;
   }
   #container {
-    grid-template-rows:
-      var(--grid-header-box-height) 2rem calc(var(--input-height) * 2)
-      1fr;
+    grid-template-rows: var(--grid-header-box-height) 2rem 3rem 1fr;
   }
   #input-container {
     display: grid;
@@ -132,7 +128,7 @@ select {
   border: none;
   width: var(--input-width);
   height: var(--input-height);
-  font-size: calc(var(--input-height) * 0.75);
+  font-size: 1.7rem;
   text-align: center;
   margin: 20px auto;
   padding: 0;
@@ -165,6 +161,6 @@ select {
 button {
   border: none;
   background-color: var(--main-text-color);
-  font-size: calc(var(--input-height) 0.75);
+  font-size: 1.7rem;
   color: var(--main-bg-color);
 }
