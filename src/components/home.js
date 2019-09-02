@@ -1,12 +1,5 @@
 import React, { useState, useEffect, createRef, Fragment } from "react";
-import {
-  search,
-  runIfProd,
-  useLocalStorage,
-  Clipboard,
-  isSafari,
-  updateGifsInLocalStorage,
-} from "../utils";
+import { search, runIfProd, useLocalStorage, Clipboard, isSafari, updateGifsInLocalStorage } from "../utils";
 
 function Home() {
   const [inputValue, setInputValue] = useState("");
@@ -29,6 +22,7 @@ function Home() {
     <Fragment>
       <section id="input-container">
         <input
+          id={"search"}
           value={inputValue}
           placeholder={`Search for a gif`}
           ref={inputRef}
