@@ -38,10 +38,9 @@ function Home() {
         <select
           onChange={async event => {
             setRating(event.target.value);
-            await setData(await search(lastQuery, event.target.value));
+            setData(await search(lastQuery, event.target.value));
           }}
         >
-          <option value={"g"}>Select a Rating</option>
           <option value={"g"}>RATING: G</option>
           <option value={"pg"}>RATING: PG</option>
           <option value={"pg-13"}>RATING: PG-13</option>
