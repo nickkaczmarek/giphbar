@@ -6,14 +6,18 @@ import { Saved } from "./components/saved.js";
 import { Upload } from "./components/upload.js";
 import { Profile } from "./components/Profile.js";
 import Logo from "./components/logo.js";
-import "./index.css";
-import * as serviceWorker from "./serviceWorker";
-import { Auth0Provider } from "./react-auth0-wrapper";
-import config from "./auth_config.json";
-
 import Navbar from "./components/Navbar.js";
 import { useAuth0 } from "./react-auth0-wrapper";
 import PrivateRoute from "./components/PrivateRoute.js";
+import "./index.css";
+import * as serviceWorker from "./serviceWorker";
+import { Auth0Provider } from "./react-auth0-wrapper";
+import { isProd } from "./utils";
+import configProd from "./auth_config.json";
+import configDev from "./auth_config.dev.json";
+
+import { initFirebase } from "./firebase";
+initFirebase();
 
 // A function that routes the user to the right place
 // after login
@@ -21,7 +25,9 @@ const onRedirectCallback = appState => {
   window.history.replaceState(
     {},
     document.title,
-    appState && appState.targetUrl ? appState.targetUrl : window.location.pathname,
+    appState && appState.targetUrl
+      ? appState.targetUrl
+      : window.location.pathname,
   );
 };
 
@@ -38,14 +44,20 @@ const App = () => {
       <Navbar />
       <Router>
         <Home path="/" />
-        <Saved path="saved" />
+        <PrivateRoute path="saved" component={Saved} />
         <Upload path="upload" />
         <PrivateRoute path="/profile" component={Profile} />
-        {/* {isAuthenticated && <Profile path="/profile" />} */}
       </Router>
     </section>
   );
 };
+
+let config;
+if (isProd()) {
+  config = configProd;
+} else {
+  config = configDev;
+}
 
 ReactDOM.render(
   <Auth0Provider

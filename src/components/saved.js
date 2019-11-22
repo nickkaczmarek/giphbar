@@ -1,10 +1,57 @@
-import React from "react";
-import { isSafari } from "../utils";
+import React, { useEffect, useState } from "react";
+import { useAuth0 } from "../react-auth0-wrapper";
+import { getGifsForUser, updateGifsForUser, deleteGif } from "../firebase";
+
+import { isSafari, copyImageUrlToClipboard } from "../utils";
+const distinct = function(arrArg) {
+  const uniqueKeys = [...new Set(arrArg.map(s => s.id))];
+  return [...uniqueKeys.map(id => arrArg.find(s => s.id === id))];
+};
 
 function Saved() {
-  const [images, setImages] = React.useState(
-    JSON.parse(localStorage.getItem("data")),
-  );
+  const { isAuthenticated, user: auth0User } = useAuth0();
+  const [images, setImages] = useState();
+
+  useEffect(() => {
+    function localStorageGifMerge() {
+      //if there are gifs to merge with
+      if (images) {
+        //get gifs
+        const localStorageGifs = JSON.parse(localStorage.getItem("data"));
+        //if gifs, do the rest, else return
+        if (!localStorageGifs || !isAuthenticated) return;
+        //save to firebase
+        console.log("copying and deleting");
+        const gifs = [...images, ...localStorageGifs];
+        const gif_Ids = [
+          ...images.map(g => g.id),
+          ...localStorageGifs.map(g => g.id),
+        ];
+        updateGifsForUser({
+          userEmail: auth0User.email,
+          gifs: distinct(gifs),
+          gif_Ids: distinct(gif_Ids),
+        });
+        //remove item from localStorage
+        localStorage.removeItem("data");
+      }
+    }
+    localStorageGifMerge();
+  });
+
+  useEffect(() => {
+    async function getUserFromFirebase() {
+      if (isAuthenticated) {
+        try {
+          let { gifs } = await getGifsForUser(auth0User.email);
+          setImages(gifs);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    }
+    getUserFromFirebase();
+  }, [isAuthenticated, auth0User.email]);
 
   return (
     <React.Fragment>
@@ -18,14 +65,13 @@ function Saved() {
                 src={isSafari() ? img.safari : img.webp}
                 alt={img.title}
                 id={img.id}
-                onClick={() => navigator.clipboard.writeText(img.url)}
+                onClick={() => copyImageUrlToClipboard(img.url)}
               />
               <button
-                onClick={() => {
-                  let data = JSON.parse(localStorage.getItem("data")) || [];
-                  let items = data.filter(i => i.id !== img.id);
-                  localStorage.setItem("data", JSON.stringify(items));
-                  setImages(JSON.parse(localStorage.getItem("data")));
+                onClick={async () => {
+                  let fbUser = await getGifsForUser(auth0User.email);
+                  setImages(fbUser.gifs.filter(x => x.id !== img.id));
+                  await deleteGif(fbUser, img);
                 }}
               >
                 X
@@ -35,8 +81,7 @@ function Saved() {
         </section>
       ) : (
         <h1>
-          Things will show up here when you search for and click gifs on the
-          other page
+          In order to have saved gifs you need to Sign in => Search => Click Gif
         </h1>
       )}
     </React.Fragment>

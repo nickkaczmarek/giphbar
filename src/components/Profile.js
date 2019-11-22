@@ -12,12 +12,30 @@ const Profile = () => {
 
   return (
     <React.Fragment>
-      <section style={{ display: "grid", justifyItems: "center", alignItems: "center" }}>
+      <section>
         <img src={user.picture} alt="Profile" style={{ marginTop: 20 }} />
 
-        <h2>{user.name}</h2>
-        <p>{user.email}</p>
-        <code>{JSON.stringify(user, null, 2)}</code>
+        <table>
+          <tbody>
+            <tr
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+              }}
+            >
+              <td>
+                {Object.keys(user).map(x =>
+                  x === "picture" ? null : <p key={x}>{x}</p>,
+                )}
+              </td>
+              <td>
+                {Object.values(user).map((x, i) =>
+                  user["picture"] === x ? null : <p key={i}>{x}</p>,
+                )}
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </section>
     </React.Fragment>
   );

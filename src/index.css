@@ -17,7 +17,7 @@
 
 #container {
   display: grid;
-  grid-template-rows: var(--grid-header-box-height) var(--input-height) 5rem 1fr;
+  grid-template-rows: var(--grid-header-box-height) var(--input-height) 5rem 1fr 5rem;
   height: 100vh;
   font-family: sans-serif;
   text-align: center;

@@ -5,23 +5,35 @@ import { useLocalStorage } from "./useLocalStorage";
  *
  * @param {string} query
  */
-async function search(query, rating) {
+async function search(query, rating, offset = 0, limit = 20) {
   const apiKey = "CAucImDiFvcD00x7ZqHSm4zcXL9Ui22d";
   const url = "https://api.giphy.com/v1/gifs/search";
 
   const response = await fetch(
-    `${url}?q=${query}&api_key=${apiKey}&limit=20&rating=${rating}`,
+    `${url}?q=${query}&api_key=${apiKey}&limit=${limit}&rating=${rating}&offset=${offset}`,
     { cache: "reload" },
   );
   const json = await response.json();
 
-  return json.data.map(img => ({
-    webp: img.images.fixed_width_downsampled.webp,
-    safari: img.images.fixed_width_downsampled.url,
-    url: img.images.original.url,
-    id: img.id,
-    title: img.title,
-  }));
+  return {
+    data: json.data.map(img => ({
+      webp: img.images.fixed_width_downsampled.webp,
+      safari: img.images.fixed_width_downsampled.url,
+      url: img.images.original.url,
+      id: img.id,
+      title: img.title,
+    })),
+    pagination: json.pagination,
+    meta: json.meta,
+  };
+}
+
+function isProd() {
+  if (process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+    return false;
+  } else {
+    return true;
+  }
 }
 
 /**
@@ -125,11 +137,21 @@ const updateGifsInLocalStorage = gif => {
   }
 };
 
+function copyImageUrlToClipboard({ url }) {
+  if (isSafari()) {
+    Clipboard.copy(url);
+  } else {
+    navigator.clipboard.writeText(url);
+  }
+}
+
 export {
   search,
+  isProd,
   runIfProd,
   useLocalStorage,
   updateGifsInLocalStorage,
   isSafari,
   Clipboard,
+  copyImageUrlToClipboard,
 };
