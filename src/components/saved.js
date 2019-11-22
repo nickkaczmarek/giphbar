@@ -65,7 +65,7 @@ function Saved() {
                 src={isSafari() ? img.safari : img.webp}
                 alt={img.title}
                 id={img.id}
-                onClick={() => copyImageUrlToClipboard(img.url)}
+                onClick={() => copyImageUrlToClipboard(img)}
               />
               <button
                 onClick={async () => {
