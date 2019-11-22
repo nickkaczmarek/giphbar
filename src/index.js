@@ -52,12 +52,12 @@ const App = () => {
   );
 };
 
-let config;
-if (isProd()) {
-  config = configProd;
-} else {
-  config = configDev;
-}
+let config = configProd;
+// if (isProd()) {
+//   config = configProd;
+// } else {
+//   config = configDev;
+// }
 
 ReactDOM.render(
   <Auth0Provider
