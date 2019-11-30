@@ -41,7 +41,7 @@ function Saved() {
 
   useEffect(() => {
     async function getUserFromFirebase() {
-      if (isAuthenticated) {
+      if (isAuthenticated && !images) {
         try {
           let { gifs } = await getGifsForUser(auth0User.email);
           setImages(gifs);
@@ -51,7 +51,7 @@ function Saved() {
       }
     }
     getUserFromFirebase();
-  }, [isAuthenticated, auth0User.email]);
+  });
 
   return (
     <React.Fragment>
@@ -68,6 +68,7 @@ function Saved() {
                 onClick={() => copyImageUrlToClipboard(img)}
               />
               <button
+                className="remove-image"
                 onClick={async () => {
                   let fbUser = await getGifsForUser(auth0User.email);
                   setImages(fbUser.gifs.filter(x => x.id !== img.id));

@@ -9,17 +9,13 @@ const PrivateRoute = ({ component: Component, path }) => {
   if (loading || isAuthenticated) {
     return <Component path={path} />;
   } else {
-    loginWithRedirect({
-      appState: { targetUrl: path },
-    });
+    const fn = async () => {
+      await loginWithRedirect({
+        appState: { targetUrl: path },
+      });
+    };
+    fn();
     return null;
-    // const fn = async () => {
-    //   await loginWithRedirect({
-    //     appState: { targetUrl: path },
-    //   });
-    // };
-    // fn();
-    // return null;
   }
 };
 

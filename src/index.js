@@ -5,14 +5,12 @@ import { Home } from "./components/home.js";
 import { Saved } from "./components/saved.js";
 import { Upload } from "./components/upload.js";
 import { Profile } from "./components/Profile.js";
-import Logo from "./components/logo.js";
 import Navbar from "./components/Navbar.js";
 import { useAuth0 } from "./react-auth0-wrapper";
 import PrivateRoute from "./components/PrivateRoute.js";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import { Auth0Provider } from "./react-auth0-wrapper";
-import { isProd } from "./utils";
 import configProd from "./auth_config.json";
 import configDev from "./auth_config.dev.json";
 
@@ -35,12 +33,39 @@ const App = () => {
   const { loading } = useAuth0();
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <section
+        style={{
+          display: "grid",
+          height: "100vh",
+          justifyContent: "center",
+          alignContent: "center",
+        }}
+      >
+        <span
+          id="brand"
+          style={{
+            width: 300,
+            height: 300,
+            borderRadius: 150,
+            display: "grid",
+            justifyContent: "center",
+            alignContent: "center",
+          }}
+        >
+          giphbar
+          <img
+            style={{ justifySelf: "center" }}
+            src="./images/Poweredby_100px-Black_VertLogo.png"
+            alt="Powered by Giphy"
+          />
+        </span>
+      </section>
+    );
   }
 
   return (
     <section id="container">
-      <Logo />
       <Navbar />
       <Router>
         <Home path="/" />
@@ -52,12 +77,9 @@ const App = () => {
   );
 };
 
-let config = configProd;
-// if (isProd()) {
-//   config = configProd;
-// } else {
-//   config = configDev;
-// }
+let config = window.location.href.includes("localhost")
+  ? configDev
+  : configProd;
 
 ReactDOM.render(
   <Auth0Provider

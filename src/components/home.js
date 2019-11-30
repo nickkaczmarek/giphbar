@@ -57,7 +57,7 @@ function Home() {
 
   useEffect(() => {
     async function checkForLastQuery() {
-      if (lastQuery) {
+      if (lastQuery && !state.results) {
         const { data: results, pagination, meta } = await search(
           lastQuery,
           state.rating,
@@ -69,7 +69,7 @@ function Home() {
       }
     }
     checkForLastQuery();
-  }, [lastQuery]);
+  });
   const getNextPage = async () => {
     dispatch({ type: statesEnum.FETCH_STARTED });
     try {
@@ -159,11 +159,19 @@ function Pagination({ getNextPage, getPreviousPage, state }) {
     state.results &&
     state.results.length > 0 && (
       <section className="pagination">
-        <button disabled={!hasPreviousPage} onClick={() => getPreviousPage()}>
-          Previous
+        <button
+          className="pagination-button"
+          disabled={!hasPreviousPage}
+          onClick={() => getPreviousPage()}
+        >
+          {"<<"}
         </button>
-        <button disabled={!hasNextPage} onClick={() => getNextPage()}>
-          Next
+        <button
+          className="pagination-button"
+          disabled={!hasNextPage}
+          onClick={() => getNextPage()}
+        >
+          {">>"}
         </button>
       </section>
     )

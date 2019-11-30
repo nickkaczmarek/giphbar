@@ -9,11 +9,42 @@ const Navbar = () => {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
   return (
-    <nav>
-      <Link to="/">Home</Link> <Link to="saved">Saved</Link> <Link to="upload">Upload</Link>{" "}
-      {isAuthenticated && <Link to="profile">Profile</Link>}{" "}
-      {!isAuthenticated && <button onClick={() => loginWithRedirect({})}>Log in</button>}
-      {isAuthenticated && <button onClick={() => logout()}>Log out</button>}
+    <nav className="nav-bar">
+      <Link to="/" id="brand">
+        giphbar
+      </Link>
+      <ul className="nav-links" id="main-nav">
+        {isAuthenticated && (
+          <>
+            <li className="nav-link">
+              <Link to="saved">Saved</Link>
+            </li>
+            <li className="nav-link">
+              <Link to="upload">Upload</Link>
+            </li>
+            <li className="nav-link">
+              <Link to="profile">Profile</Link>
+            </li>
+            <li className="nav-link">
+              <button onClick={() => logout()}>Log out</button>
+            </li>
+          </>
+        )}
+        {!isAuthenticated && (
+          <li className="nav-link">
+            <button onClick={() => loginWithRedirect({})}>Log in</button>
+          </li>
+        )}
+      </ul>
+      <button
+        className="nav-toggle"
+        onClick={() => {
+          const mainNav = document.getElementById("main-nav");
+          mainNav.classList.toggle("active");
+        }}
+      >
+        &#9776;
+      </button>
     </nav>
   );
 };
