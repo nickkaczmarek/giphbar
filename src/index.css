@@ -307,7 +307,7 @@ form > input {
     font-size: 48px !important;
   }
   #container {
-    grid-template-rows: minmax(6rem, 1fr) 5rem 5rem 1fr;
+    grid-template-rows: minmax(6rem, auto) 5rem 5rem 1fr;
   }
   #input-container {
     display: grid;
