@@ -23,7 +23,9 @@ const Navbar = () => {
               <Link to="upload">Upload</Link>
             </li>
             <li className="nav-link">
-              <Link to="profile">Profile</Link>
+              <Link to="profile" id="profile">
+                Profile
+              </Link>
             </li>
             <li className="nav-link">
               <button onClick={() => logout()}>Log out</button>
@@ -32,11 +34,14 @@ const Navbar = () => {
         )}
         {!isAuthenticated && (
           <li className="nav-link">
-            <button onClick={() => loginWithRedirect({})}>Log in</button>
+            <button id="login" onClick={() => loginWithRedirect({})}>
+              Log in
+            </button>
           </li>
         )}
       </ul>
       <button
+        id="nav-burger"
         className="nav-toggle"
         onClick={() => {
           const mainNav = document.getElementById("main-nav");

@@ -10,15 +10,17 @@
     "firebase": "^7.3.0",
     "react": "16.11.0",
     "react-dom": "16.11.0",
-    "react-scripts": "3.2.0"
+    "react-scripts": "^3.3.0"
   },
   "devDependencies": {
+    "puppeteer": "^2.0.0",
     "typescript": "3.7.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
     "eject": "react-scripts eject"
   },
   "browserslist": [
