@@ -3,9 +3,9 @@ import { useAuth0 } from "../react-auth0-wrapper";
 import { getGifsForUser, updateGifsForUser, deleteGif } from "../firebase";
 
 import { isSafari, copyImageUrlToClipboard } from "../utils";
-const distinct = function(arrArg) {
-  const uniqueKeys = [...new Set(arrArg.map(s => s.id))];
-  return [...uniqueKeys.map(id => arrArg.find(s => s.id === id))];
+const distinct = function (arrArg) {
+  const uniqueKeys = [...new Set(arrArg.map((s) => s.id))];
+  return [...uniqueKeys.map((id) => arrArg.find((s) => s.id === id))];
 };
 
 function Saved() {
@@ -24,8 +24,8 @@ function Saved() {
         console.log("copying and deleting");
         const gifs = [...images, ...localStorageGifs];
         const gif_Ids = [
-          ...images.map(g => g.id),
-          ...localStorageGifs.map(g => g.id),
+          ...images.map((g) => g.id),
+          ...localStorageGifs.map((g) => g.id),
         ];
         updateGifsForUser({
           userEmail: auth0User.email,
@@ -44,6 +44,14 @@ function Saved() {
       if (isAuthenticated && !images) {
         try {
           let { gifs } = await getGifsForUser(auth0User.email);
+          gifs = gifs.map((x) => {
+            return {
+              ...x,
+              safari: x.safari
+                ? x.safari
+                : `${x.webp.substring(0, x.webp.indexOf(".webp"))}.gif`,
+            };
+          });
           setImages(gifs);
         } catch (error) {
           console.error(error);
@@ -58,7 +66,7 @@ function Saved() {
       {images && images.length ? (
         <section className="gif-container">
           {" "}
-          {images.map(img => (
+          {images.map((img) => (
             <figure key={img.id}>
               <img
                 className={"image"}
@@ -71,7 +79,7 @@ function Saved() {
                 className="remove-image"
                 onClick={async () => {
                   let fbUser = await getGifsForUser(auth0User.email);
-                  setImages(fbUser.gifs.filter(x => x.id !== img.id));
+                  setImages(fbUser.gifs.filter((x) => x.id !== img.id));
                   await deleteGif(fbUser, img);
                 }}
               >

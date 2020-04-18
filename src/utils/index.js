@@ -16,7 +16,7 @@ async function search(query, rating, offset = 0, limit = 20) {
   const json = await response.json();
 
   return {
-    data: json.data.map(img => ({
+    data: json.data.map((img) => ({
       webp: img.images.fixed_width_downsampled.webp,
       safari: img.images.fixed_width_downsampled.url,
       url: img.images.original.url,
@@ -68,13 +68,13 @@ const isSafari = () => {
       chrome: window.chrome && !!window.chrome.webstore,
     };
 
-    return Object.keys(browsers).find(key => browsers[key] === true);
+    return Object.keys(browsers).find((key) => browsers[key] === true);
   };
 
   return browserDetection() === "safari";
 };
 
-const Clipboard = (function(window, document, navigator) {
+const Clipboard = (function (window, document, navigator) {
   var textArea, copy;
 
   function isOS() {
@@ -107,7 +107,7 @@ const Clipboard = (function(window, document, navigator) {
     document.body.removeChild(textArea);
   }
 
-  copy = function(text) {
+  copy = function (text) {
     createTextArea(text);
     selectText();
     copyToClipboard();
@@ -128,9 +128,9 @@ const Clipboard = (function(window, document, navigator) {
  * @property {string} webp
  *
  */
-const updateGifsInLocalStorage = gif => {
+const updateGifsInLocalStorage = (gif) => {
   let data = JSON.parse(localStorage.getItem("data")) || [];
-  let isAlreadyInStorage = data.find(x => x.id === gif.id);
+  let isAlreadyInStorage = data.find((x) => x.id === gif.id);
   if (!isAlreadyInStorage) {
     data.push(gif);
     localStorage.setItem("data", JSON.stringify(data));
