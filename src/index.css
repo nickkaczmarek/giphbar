@@ -171,7 +171,7 @@ a#brand {
   max-width: 980px;
 }
 
-#gif-container {
+.gif-container {
   display: grid;
   justify-items: center;
   grid-template-columns: repeat(auto-fill, minmax(var(--img-width), 1fr));

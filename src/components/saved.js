@@ -26,7 +26,10 @@ function Saved() {
         //save to firebase
         console.log("copying and deleting");
         const gifs = [...images, ...localStorageGifs];
-        const gif_Ids = [...images.map((g) => g.id), ...localStorageGifs.map((g) => g.id)];
+        const gif_Ids = [
+          ...images.map((g) => g.id),
+          ...localStorageGifs.map((g) => g.id),
+        ];
         updateGifsForUser({
           userEmail: auth0User.email,
           gifs: distinct(gifs),
@@ -64,7 +67,9 @@ function Saved() {
 
   useEffect(() => {
     if (searchTerm) {
-      const results = images.filter((x) => x.title.toLowerCase().includes(searchTerm));
+      const results = images.filter((x) =>
+        x.title.toLowerCase().includes(searchTerm),
+      );
 
       setFilteredImages(results);
     } else {
@@ -82,7 +87,7 @@ function Saved() {
       {filteredImages && filteredImages.length ? (
         <>
           {" "}
-          <section id="gif-container">
+          <section className="gif-container">
             {filteredImages.map((img) => (
               <figure key={img.id}>
                 <span>{img.title}</span>
@@ -108,7 +113,9 @@ function Saved() {
           </section>
         </>
       ) : (
-        <h1>In order to have saved gifs you need to Sign in => Search => Click Gif</h1>
+        <h1>
+          In order to have saved gifs you need to Sign in => Search => Click Gif
+        </h1>
       )}
     </>
   );

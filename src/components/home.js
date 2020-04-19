@@ -183,14 +183,14 @@ function GifContainer({ state, isAuthenticated, user, inputRef }) {
     return (
       <section className="gif-container">
         {" "}
-        {state.results.map(img => (
+        {state.results.map((img) => (
           <img
             className={"image"}
             src={isSafari() ? img.safari : img.webp}
             alt={img.title}
             key={img.id}
             id={img.id}
-            onClick={async _ => {
+            onClick={async (_) => {
               copyImageUrlToClipboard(img);
               await storeGifsInFirebase(isAuthenticated, user, img);
               runIfProd(() => inputRef.current.focus());
