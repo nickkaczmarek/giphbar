@@ -3,7 +3,7 @@ import puppeteer from "puppeteer";
 let browser, page, navigationPromise;
 
 describe("tests", () => {
-  beforeAll(async function() {
+  beforeAll(async function () {
     browser = await puppeteer.launch({ headless: false, devtools: true });
     page = await browser.newPage();
     page.setViewport({ width: 1920, height: 1080, deviceScaleFactor: 1 });
@@ -48,15 +48,12 @@ describe("tests", () => {
     // }
     await page.waitForSelector("#profile", { visible: true });
     const profileLink = await page.$("#profile");
-    await Promise.all([
-      profileLink.click(),
-      page.waitForNavigation({ waitUntil: "domcontentloaded" }),
-    ]);
+    await Promise.all([profileLink.click(), page.waitForNavigation({ waitUntil: "domcontentloaded" })]);
 
     expect(page.url()).toStrictEqual("http://localhost:3000/profile");
   }, 30000);
 
-  afterAll(async function() {
+  afterAll(async function () {
     await browser.close();
   });
 });
